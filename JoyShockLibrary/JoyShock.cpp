@@ -1,6 +1,7 @@
 #pragma once
 
 #include "JoyShockLibrary.h"
+#include "GamepadMotion.hpp"
 #include <bitset>
 #include "hidapi.h"
 #include <chrono>
@@ -9,6 +10,7 @@
 #include <atomic>
 #include "tools.cpp"
 #include <cstring>
+#include <mutex>
 
 #ifdef __GNUC__
 #define _wcsdup wcsdup
