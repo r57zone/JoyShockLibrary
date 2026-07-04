@@ -59,8 +59,6 @@ public:
 
 	std::string name;
 
-	unsigned char packetCounter = 0;
-
 	int deviceNumber = 0;// left(0) or right(1) vjoy
 
 	int left_right = 0;// 1: left joycon, 2: right joycon, 3: pro controller
@@ -372,8 +370,8 @@ public:
 		modifying_lock.lock();
 		if (num_cumulative_gyro_samples == 0) {
 			gyroX = cumulative_gyro_x;
-			gyroX = cumulative_gyro_y;
-			gyroX = cumulative_gyro_z;
+			gyroY = cumulative_gyro_y;
+			gyroZ = cumulative_gyro_z;
 		}
 		else {
 			gyroX = cumulative_gyro_x / num_cumulative_gyro_samples;
@@ -1482,7 +1480,7 @@ public:
 		memset(buf, 0, 64);
 
 		buf[0] = 0x10;
-		buf[1] = packetCounter++ & 0x0f;
+		buf[1] = (++global_count) & 0x0f;
 
 		if (isLeft) {
 			if (rumble == 0) {
@@ -1514,7 +1512,7 @@ public:
 		memset(buf, 0, 64);
 
 		buf[0] = 0x10;
-		buf[1] = packetCounter++ & 0x0f;
+		buf[1] = (++global_count) & 0x0f;
 		EncodeRumble(&buf[2], MotorFreqFromStrength(smallRumble), (smallRumble / 255.0f));
 		EncodeRumble(&buf[6], MotorFreqFromStrength(bigRumble), (bigRumble / 255.0f));
 
